@@ -1,0 +1,19 @@
+.color {
+  height: 40px;
+  width: 40px;
+  margin: 3px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.pixel {
+  display: table-cell;
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+}
