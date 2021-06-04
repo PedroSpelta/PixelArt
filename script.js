@@ -1,5 +1,16 @@
-//  requisito 10
+function resizeBoard(board) {
+  const input = document.querySelector('#board-range')
+  board.style.height = `${input.value}px`;
+  board.style.width = `${input.value}px`;
+  const pixel = document.querySelectorAll('.pixel');
+  const sideSize = Math.sqrt(pixel.length);
+  pixel.forEach((element) => {
+    element.style.height = `${input.value / sideSize}px`
+    element.style.width = `${input.value / sideSize}px` 
+  });
+}
 
+// cria um board com n lados
 function createBoard(n) {
   const board = document.createElement('div');
   board.id = 'pixel-board';
@@ -14,20 +25,24 @@ function createBoard(n) {
     board.appendChild(row);
   }
   document.body.appendChild(board);
+  resizeBoard(board);
+  addPixelsListener();
 }
 
+//deleta o board que está dentro da id pixel board
 function deleteBoard() {
   const board = document.querySelector('#pixel-board');
   board.remove();
 }
 
-// requisito 11
+// define tamanho máximo e minimo pro n
 function cropBoardSize(n) {
   if (n < 5) return 5;
   if (n > 50) return 50;
   return n;
 }
 
+//recria o board com o lado = o input
 function replaceBoard() {
   let n = document.querySelector('#board-size').value;
   if (n === '') return window.alert('Board inválido!');
@@ -36,13 +51,7 @@ function replaceBoard() {
   createBoard(n);
 }
 
-const vqvBtn = document.querySelector('#generate-board');
-vqvBtn.addEventListener('click', replaceBoard);
-
-// inicio do projeto
-createBoard(5);
-
-// colocando cor nas divs
+// coloca cor do array [colors] na palete de cores
 function addColorToColorPalette(colors) {
   const divs = document.querySelectorAll('.color');
   for (let index = 0; index < colors.length; index += 1) {
@@ -50,6 +59,7 @@ function addColorToColorPalette(colors) {
   }
 }
 
+// coloca cor aleatoria na paleta, sendo a primeira sempre black
 function randomFourColors() {
   const colors = ['black'];
   for (let index = 0; index < 3; index += 1) {
@@ -61,40 +71,37 @@ function randomFourColors() {
   return colors;
 }
 
-addColorToColorPalette(randomFourColors());
-
+// atribui selected no parametro, que deve ser uma div da palette
 function colorSetSelected(event) {
   const previousSelected = document.querySelector('.color.selected');
   previousSelected.classList.remove('selected');
   event.target.classList.add('selected');
 }
+
+// adiciona o listener para toda a palette
 function addSelectedAllPalette() {
   const allPalette = document.querySelectorAll('.color');
   for (let index = 0; index < allPalette.length; index += 1) {
     allPalette[index].addEventListener('click', colorSetSelected);
   }
 }
-addSelectedAllPalette();
 
-// requisito 7
-
+// pinta um pixel com a cor da palette selected
 function addColorPixel(event) {
-  // const test = event;
   const { target } = event;
   const selected = document.querySelector('.color.selected');
   target.style.backgroundColor = selected.style.backgroundColor;
 }
 
+// adciona o listener para todos os pixels
 function addPixelsListener() {
   const pixelsList = document.querySelectorAll('.pixel');
   for (let index = 0; index < pixelsList.length; index += 1) {
     pixelsList[index].addEventListener('click', addColorPixel);
   }
 }
-addPixelsListener();
 
-//  requisito 9
-
+// limpa a cor de todos os pixels
 function clearBoard() {
   const allPixels = document.querySelectorAll('.pixel');
   for (let index = 0; index < allPixels.length; index += 1) {
@@ -102,5 +109,11 @@ function clearBoard() {
   }
 }
 
+// chamando as funçoes
+const vqvBtn = document.querySelector('#generate-board');
+vqvBtn.addEventListener('click', replaceBoard);
+createBoard(5);
+addColorToColorPalette(randomFourColors());
+addSelectedAllPalette();
 const btn = document.querySelector('#clear-board');
 btn.addEventListener('click', clearBoard);
