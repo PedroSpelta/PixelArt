@@ -11,13 +11,14 @@
     <h1 id="title">Pixel art</h1>
     <div id="modificadores">
       <button id="clear-board">Limpar</button>
-      <input id="board-size" type="number" name="quantity" min="1" max="50" placeholder="Tamanho do quadro">
-      <button id="generate-board" onclick="replaceBoard()">VQV</button>
+      <input id="board-size" type="number" name="quantity" min="1" max="50" placeholder="Tamanho do quadro" onkeyup="enterSizePress(event)">
     </div>
   </div>
   <div id="header-display-hide"  onclick="hideHeader(event)">⬆</div>
   <div id="pixel-board">
-    <input id="board-range" type="range" min="300" max="600" value="450" onchange="inputSizeChange(event)">
+    <input id="color-input" onchange="colorChange(event)" type="color">
+    <button id="color-changer" onclick="clickColorChange(event)">Trocar cor</button>
+    <input id="board-range" type="range" min="350" max="800" value="450" onchange="inputSizeChange(event)">
     <div id="color-palette">
       <div class="color selected"></div>
       <div class="color"></div>

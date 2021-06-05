@@ -1,17 +1,47 @@
 
+function decToHex(number) {
+  const hex = Number(number).toString(16);
+
+  return hex.length === 1 ? `0${hex}` : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return `#${decToHex(Number(r))}${decToHex(Number(g))}${decToHex(Number(b))}`;
+}
+
+function colorChange(event) {
+  const { target } = event;
+  const selected = document.querySelector('.selected');
+  selected.style.backgroundColor = target.value;
+}
+
+function clickColorChange(event) {
+  const selected = document.querySelector('.selected');
+  const colorInput = document.querySelector('#color-input');
+  //colorInput.value = selected.style.backgroundColor;
+  const [r, g, b] = (selected.style.backgroundColor).slice(4).replace(')','').replace(' ','').replace(' ','').split(',')
+  const hex = rgbToHex(r,g,b);
+  colorInput.value = hex;
+  colorInput.click()
+}
+
+
+
+function enterSizePress(event) {
+  if (event.key === 'Enter') { 
+    replaceBoard();
+  }
+}
 
 function hideHeader(event) {
   const { target } = event;
-  console.log(target);
   const header = document.querySelector('#header')
-  if (header.style.display === 'none') {
-    header.style.display = ''
+  if (header.style.marginTop === '-170px') {
+    header.style.marginTop = '0px'
     target.innerText = '⬆';
-    console.log(target);
   }else {
-    header.style.display = 'none';
+    header.style.marginTop = '-170px';
     target.innerText = '⬇';
-    console.log(target);
   }
 }
 
@@ -41,17 +71,6 @@ function resizeBoard() {
 }
 
 // cria um board com n lados
-
-// function createBoard(n) {
-//   const board = document.querySelector('#pixel-board');
-//   for (let index = 0; index < (n**2); index += 1) {
-//     const pixel = document.createElement('div');
-//     pixel.classList.add('pixel');
-//     board.appendChild(pixel);
-//   }
-//   resizeBoard(board);
-//   addPixelsListener();
-// }
 function createBoard(n) {
   const board = document.querySelector('#pixel-board');
   for (let index = 0; index < n; index += 1) {
@@ -70,8 +89,14 @@ function createBoard(n) {
 
 //deleta o board que está dentro da id pixel board
 function deleteBoard() {
-  const board = document.querySelector('#pixel-board');
-  board.remove();
+  let board = document.querySelectorAll('.table-row');
+  board.forEach((element) => {
+    element.remove()    
+  });
+  // console.log( document.querySelector('#pixel-board'));
+  // board = document.createElement('div');
+  // board.id = '#pixel-board';
+  // document.body.appendChild(board);
 }
 
 // define tamanho máximo e minimo pro n
@@ -98,14 +123,17 @@ function addColorToColorPalette(colors) {
   }
 }
 
+
+
 // coloca cor aleatoria na paleta, sendo a primeira sempre black
 function randomColors(number) {
-  const colors = ['black'];
+  const colors = ['rgb(0, 0, 0)'];
   for (let index = 0; index < number-1; index += 1) {
     const r = Math.floor(Math.random() * 255);
     const g = Math.floor(Math.random() * 255);
     const b = Math.floor(Math.random() * 255);
-    colors.push(`rgb(${r}, ${g}, ${b})`);
+    const hex = rgbToHex(r, g, b);
+    colors.push(hex);
   }
   return colors;
 }
@@ -156,7 +184,7 @@ function inputSizeChange() {
 
 // chamando as funçoes
 const vqvBtn = document.querySelector('#generate-board');
-vqvBtn.addEventListener('click', replaceBoard);
+//vqvBtn.addEventListener('click', replaceBoard);
 createBoard(5);
 addColorToColorPalette(randomColors(8));
 addSelectedAllPalette();

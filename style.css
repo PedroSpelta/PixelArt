@@ -12,6 +12,24 @@ h1 {
   font-size: 60px;
   text-align: center;
   font: "pixel";
+  margin: 20px 0px;
+}
+
+#board-size {
+  text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button, #board-size {
+  height: 40px;
+  width: 100px;
+  font-size: 22px;
+  margin-bottom: 15px;
 }
 
 #modificadores {
@@ -25,8 +43,8 @@ h1 {
 .color {
   height: 40px;
   width: 40px;
-  margin: 3px;
-  border: 1px solid black;
+  margin: 6px;
+  border: 1.7px solid black;
 }
 
 .table-row {
@@ -49,14 +67,37 @@ h1 {
 #color-palette {
   position: absolute;
   top: 50%;
-  left: -100px;
+  left: -80px;
   transform: translateY(-50%);
+}
+
+#color-changer {
+  position: absolute;
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  border: 0px;
+  background-color: rgb(168, 168, 168);
+  top: 50%;
+  transform: translateY(-50%);
+  left: -200px;
+  box-shadow: black 5px 8px 10px -2px;
+}
+
+#color-input {
+  position: absolute;
+  top: 30%;
+  transform: translateY(-50%);
+  left: -280px;
+  visibility: hidden;
+  
 }
 
 #pixel-board {
   margin: auto;
   position: relative;
   margin-top: 50px;
+  box-shadow: black 20px 40px 70px 2px;
 }
 
 #visible-board {
@@ -67,6 +108,7 @@ h1 {
 #header {
   background-color: rgb(168, 168, 168);
   padding: 3px;
+  transition: margin .4s;
 }
 
 #header-display-hide {
@@ -78,4 +120,9 @@ h1 {
   text-align: center;
   padding: 4px;
   display: inline-block;
+}
+
+.selected {
+  border: 2px solid orange;
+  outline: 1px solid orange;
 }
